@@ -15,7 +15,7 @@ $(document).ready(function () {
     function ajaxCall() {
 
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
-        let p
+        let p = '';
         $.ajax({
             type: "POST",
             url: "curl -v -XPOST https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=" + key,
@@ -23,7 +23,8 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
             }
-        }
+        });
+    }
 });
 
 //https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0
