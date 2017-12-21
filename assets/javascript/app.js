@@ -12,19 +12,28 @@ $(document).ready(function () {
 
     console.log("working");
 
-    function ajaxCall() {
+    function fetchRequest() {
 
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
-        let p = '';
-        $.ajax({
-            type: "POST",
-            url: "curl -v -XPOST https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=" + key,
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-            }
+        let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/campgrounds';
+
+        var myHeaders = new Headers();
+        myHeaders.append('X-Api-Key', key);
+        var myInit = {
+            method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            cache: 'default'
+        };
+
+        fetch(url, myInit).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            console.log(json);
         });
     }
+
+    fetchRequest();
 });
 
 //https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0
