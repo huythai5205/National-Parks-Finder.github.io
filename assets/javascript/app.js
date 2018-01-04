@@ -10,23 +10,44 @@ $(document).ready(function () {
     };
     firebase.initializeApp(config);
 
+    let slideIndex = 0;
+    carousel();
+
+    function carousel() {
+        let i;
+        let x = document.getElementsByClassName("mySlides");
+
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        };
+
+        slideIndex++;
+        if (slideIndex > x.length) {
+            slideIndex = 1
+        };
+
+        x[slideIndex - 1].style.display = "block";
+        setTimeout(carousel, 2000);
+    };
+
     function displayParksList(parks) {
         fetch('./parksList.html').then(response => {
             return response.text();
         }).then(html => {
-            $('#container').html(html);
+            $('.container').html(html);
+
+            $.each(parks.data, function (index, value) {
+                console.log(value.name);
+                let park = `
+                <div class="col-sm-4 park-img">working</div>
+                <div class="col-sm-8 park-details">${value.name}</div>
+                `;
+                $('.parks-list').append(park);
+            });
         });
         // document.location.href = '/parksList.html';
         console.log(parks.data[1].name);
-        $.each(parks.data, function (index, value) {
-            console.log(value.name);
-            let park = `
-            <div class="col-md-4 park-img">working</div>
-            <div class="col-md-8 park-details">${value.name}</div>
-            `;
-            $('.parks-list').append(`<h1>HELLOW WORLD</h1>`);
-        });
-        $('.parks-list').html("working");
+
     };
 
     function fetchNPS(topic, string) {
@@ -51,7 +72,6 @@ $(document).ready(function () {
         });
     }
 
-
     function initMap() {
         var uluru = {
             lat: -25.363,
@@ -69,14 +89,9 @@ $(document).ready(function () {
     }
     initMap();
 
-
     $('#getLocation').click(function () {
         let location = "?stateCode=" + $('#locationInput').val();
         fetchNPS('parks', location);
     });
 
-
 });
-
-//https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0
-//Account ID: eac74705-6bb1-4ee4-96ab-95e2fef6999a
