@@ -1,0 +1,32 @@
+.mySlides{
+    height: 600px;
+    width: 100%;
+
+}
+h1{
+    position: relative;
+    text-align: center;
+}
+form{
+    text-align: center;
+    margin: 10px;
+    color: white;
+}
+
+header{
+    text-align: center;
+    font-size: 85px;
+}
+body{
+    background-color: black;
+}
+
+header{
+    color: white;
+}
+
+#1stPark{
+    border-style: solid;
+    border-color: white;
+}
+
