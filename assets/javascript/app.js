@@ -10,6 +10,25 @@ $(document).ready(function () {
     };
     firebase.initializeApp(config);
 
+    function displayParksList(parks) {
+        fetch('./parksList.html').then(response => {
+            return response.text();
+        }).then(html => {
+            $('#container').html(html);
+        });
+        // document.location.href = '/parksList.html';
+        console.log(parks.data[1].name);
+        $.each(parks.data, function (index, value) {
+            console.log(value.name);
+            let park = `
+            <div class="col-md-4 park-img">working</div>
+            <div class="col-md-8 park-details">${value.name}</div>
+            `;
+            $('.parks-list').append(`<h1>HELLOW WORLD</h1>`);
+        });
+        $('.parks-list').html("working");
+    };
+
     function fetchNPS(topic, string) {
 
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
@@ -28,13 +47,12 @@ $(document).ready(function () {
             return response.json();
         }).then(function (json) {
             console.log(json);
-            $('.display-result').html(JSON.stringify(json));
+            displayParksList(json);
         });
     }
 
 
     function initMap() {
-        console.log("map working");
         var uluru = {
             lat: -25.363,
             lng: 131.044
@@ -55,7 +73,7 @@ $(document).ready(function () {
     $('#getLocation').click(function () {
         let location = "?stateCode=" + $('#locationInput').val();
         fetchNPS('parks', location);
-    })
+    });
 
 
 });
