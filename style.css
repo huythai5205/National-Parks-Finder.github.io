@@ -41,12 +41,6 @@ h3{
     height: 200px;
 }
 
-.secPark {
-
-text-align: center;
-
-
-}
 
 .featured2{
     width: 270px;
@@ -60,16 +54,17 @@ text-align: center;
     height: 300px;
     width: 300px;
     display: inline-block;
-    text-align: right;
-    float: right;
-    margin-right: 100px;
+    text-align: left;
+    
+    margin-left: 100px;
 }
 
 #secondPark {
     height: 300px;
     width: 300px;
     float: left;
-    margin-left: 100px;
+    margin-left: 200px;
+    text-align: left;
 }
 
 .featured3{
@@ -82,9 +77,9 @@ text-align: center;
     width: 300px;
     float: right;
     margin-right: 200px;
+    text-align: left;
 }
 
-button{
-        
-    
+form {
+    margin-right: 50px;
 }
