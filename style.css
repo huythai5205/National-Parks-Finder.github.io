@@ -25,8 +25,66 @@ header{
     color: white;
 }
 
-#1stPark{
-    border-style: solid;
-    border-color: white;
+
+h3{
+    color: white;
 }
 
+.features{
+    text-align: center;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.featured1{
+    width: 270px;
+    height: 200px;
+}
+
+.secPark {
+
+text-align: center;
+
+
+}
+
+.featured2{
+    width: 270px;
+    height: 200px;
+    
+    
+
+}
+
+#firstPark {
+    height: 300px;
+    width: 300px;
+    display: inline-block;
+    text-align: right;
+    float: right;
+    margin-right: 100px;
+}
+
+#secondPark {
+    height: 300px;
+    width: 300px;
+    float: left;
+    margin-left: 100px;
+}
+
+.featured3{
+    width: 270px;
+    height: 200px;
+}
+
+#thirdPark{
+    height: 300px;
+    width: 300px;
+    float: right;
+    margin-right: 200px;
+}
+
+button{
+        
+    
+}
