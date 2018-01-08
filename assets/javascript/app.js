@@ -10,25 +10,14 @@ $(document).ready(function () {
     };
     firebase.initializeApp(config);
 
-    let slideIndex = 0;
-    carousel();
-
-    function carousel() {
-        let i;
-        let x = document.getElementsByClassName("mySlides");
-
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        };
-
-        slideIndex++;
-        if (slideIndex > x.length) {
-            slideIndex = 1
-        };
-
-        x[slideIndex - 1].style.display = "block";
-        setTimeout(carousel, 2000);
-    };
+    function getCoordinates(coordinates) {
+        var aCoordinates = coordinates.split(",");
+        var latitude = aCoordinates[0].split(":");
+        latitude = latitude[1];
+        var longitude = aCoordinates[1].split(":");
+        longitude = longitude[1];
+        return [latitude, longitude];
+    }
 
     function displayParksList(parks) {
         fetch('./parksList.html').then(response => {
@@ -37,16 +26,20 @@ $(document).ready(function () {
             $('.container').html(html);
 
             $.each(parks.data, function (index, value) {
-                console.log(value.name);
+
                 let park = `
-                <div class="col-sm-4 park-img">working</div>
-                <div class="col-sm-8 park-details">${value.name}</div>
+                <div class="col-sm-4">map</div>
+                <div class="col-sm-8 park-details">
+                <h1>${value.name}</h1>
+                <h2>${value.description}</h2>
+                <h2>${value.directionsUrl}</h2>
+                <h2>${value.url}</h2>
+                </div>
                 `;
+
                 $('.parks-list').append(park);
             });
         });
-        // document.location.href = '/parksList.html';
-        console.log(parks.data[1].name);
 
     };
 
@@ -72,12 +65,14 @@ $(document).ready(function () {
         });
     }
 
-    function initMap() {
+    function initMap(latitude, longitude, map) {
+
         var uluru = {
-            lat: -25.363,
-            lng: 131.044
+            lat: latitude,
+            lng: longitude
         };
-        var map = new google.maps.Map(document.getElementById('map'), {
+        console.log(map);
+        var map = new google.maps.Map(document.getElementById(map), {
             zoom: 4,
             center: uluru
         });
@@ -87,7 +82,6 @@ $(document).ready(function () {
         });
 
     }
-    initMap();
 
     $('#getLocation').click(function () {
         let location = "?stateCode=" + $('#locationInput').val();

@@ -1,0 +1,47 @@
+{
+    states: "CO",
+    latLong: "lat:37.79256812, long:-105.5919572",
+    description: "The tallest dunes in North America are the centerp…t skies and nocturnal wildlife during your visit.",
+    designation: "National Park & Preserve",
+    parkCode: "grsa",
+    …
+}
+description
+    :
+    "The tallest dunes in North America are the centerpiece in a diverse landscape of grasslands, wetlands, conifer and aspen forests, alpine lakes, and tundra. Experience this diversity through hiking, sand sledding, splashing in Medano Creek, wildlife watching, and more! The park and preserve are always open, so plan to also experience night skies and nocturnal wildlife during your visit."
+designation
+    :
+    "National Park & Preserve"
+directionsInfo
+    :
+    "To access the main park area, including the Dunes Parking Lot, Visitor Center, and Pinyon Flats Campground, take US 160 to CO 150 from the south, or CO 17 to Lane 6 to CO 150 from the west. The national park is at the north end of CO 150."
+directionsUrl
+    :
+    "http://www.nps.gov/grsa/planyourvisit/directions.htm"
+fullName
+    :
+    "Great Sand Dunes National Park & Preserve"
+id
+    :
+    "461D40CC-4379-4C1B-ADB8-3563147F61A1"
+latLong
+    :
+    "lat:37.79256812, long:-105.5919572"
+name
+    :
+    "Great Sand Dunes"
+parkCode
+    :
+    "grsa"
+states
+    :
+    "CO"
+url
+    :
+    "https://www.nps.gov/grsa/index.htm"
+weatherInfo
+    :
+    "Temperatures are relatively cool all year, thanks to the park and preserve's high elevation. Conditions are most often calm, but winds can arise, especially in spring and during storm fronts.  Daytime temperatures feel warmer here year round due to intense high-altitude sunlight, and a scorching mid-day summer sand surface. Plan to explore the dunes morning or evening during summer. Nights are cool in summer, and frigid in winter. Visit the Great Sand Dunes website for the most accurate weather forecasts."
+__proto__
+    :
+    Object
