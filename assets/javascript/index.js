@@ -92,7 +92,6 @@ $(document).ready(function () {
         infoWindow.open(map);
     }
 
-    initMap();
 
 
 
