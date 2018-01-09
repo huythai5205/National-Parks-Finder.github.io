@@ -66,27 +66,21 @@ $(document).ready(function () {
     });
 
     (function renderParks() {
-        firebase.database().ref('/Parks').on('value', function (data) {
+        firebase.database().ref('/Park').on('value', function (data) {
             if (data.exists()) {
-                aParks = data.val();
-                console.log(aParks);
-            }
-            $.each(aParks, function (index, value) {
-                if (value.latLong) {
-                    aCoordinates.push(getCoordinate(value.latLong));
-                    console.log(value.parkCode);
-                    $('.row').append(`
-                    <div class="park" id="${value.parkCode}">
+                oPark = data.val();
+                console.log(oPark);
+
+                $('.row').append(`
+                    <div class="park">
                     <div class="col">
-                    <h2>${value.fullName}</h2>
-                    <p>${value.description}</p>
+                    <h2>${oPark[0].fullName}</h2>
+                    <p>${oPark[0].description}</p>
                     </div>
                     </div>
 
                 `);
-                }
-            });
-
+            }
         });
     })();
 

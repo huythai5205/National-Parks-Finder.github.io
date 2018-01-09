@@ -24,6 +24,7 @@ $(document).ready(function () {
     });
 
     function fetchNPS(topic, string) {
+        console.log(topic, string);
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
         let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + topic + '' + string;
 
