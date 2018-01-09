@@ -1,0 +1,85 @@
+.mySlides{
+    height: 600px;
+    width: 100%;
+
+}
+h1{
+    position: relative;
+    text-align: center;
+}
+form{
+    text-align: center;
+    margin: 10px;
+    color: white;
+}
+
+header{
+    text-align: center;
+    font-size: 85px;
+}
+body{
+    background-color: black;
+}
+
+header{
+    color: white;
+}
+
+
+h3{
+    color: white;
+}
+
+.features{
+    text-align: center;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.featured1{
+    width: 270px;
+    height: 200px;
+}
+
+
+.featured2{
+    width: 270px;
+    height: 200px;
+    
+    
+
+}
+
+#firstPark {
+    height: 300px;
+    width: 300px;
+    display: inline-block;
+    text-align: left;
+    
+    margin-left: 100px;
+}
+
+#secondPark {
+    height: 300px;
+    width: 300px;
+    float: left;
+    margin-left: 200px;
+    text-align: left;
+}
+
+.featured3{
+    width: 270px;
+    height: 200px;
+}
+
+#thirdPark{
+    height: 300px;
+    width: 300px;
+    float: right;
+    margin-right: 200px;
+    text-align: left;
+}
+
+form {
+    margin-right: 50px;
+}
