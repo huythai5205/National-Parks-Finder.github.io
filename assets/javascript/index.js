@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    let aParks = [];
-
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyBbhqfr6ojolDSamP-4uuWc-CbdOVqee14",
@@ -15,18 +13,28 @@ $(document).ready(function () {
     firebase.initializeApp(config);
 
     function saveParks() {
-        firebase.database().ref('/Parks').set(aParks);
+        firebase.database().ref('/States Code').set(statesCode);
     }
 
-    $('#searchParksBtn').click(function () {
-        let location = "?stateCode=" + $('#stateInput').val();
-        fetchNPS('parks', location);
+    function saveLocal(statesCode) {
+        if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("statesCode", statesCode);
+        } else {
+            // Sorry! No Web Storage support..
+        }
+    }
+
+    $('select').change(function () {
+        let statesCode = "parks?statesCode=" + $('select option:selected').val();
+        //saveParks(statesCode);
+        saveLocal(statesCode);
+        document.location.href = 'parksList.html';
     });
 
-    function fetchNPS(topic, string) {
-        console.log(topic, string);
+
+    function fetchNPS(string) {
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
-        let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + topic + '' + string;
+        let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + string;
 
         var myHeaders = new Headers();
         myHeaders.append('X-Api-Key', key);
@@ -41,8 +49,7 @@ $(document).ready(function () {
             return response.json();
         }).then(function (json) {
             aParks = json.data;
-            saveParks();
-            document.location.href = 'parksList.html';
+
         });
     }
 

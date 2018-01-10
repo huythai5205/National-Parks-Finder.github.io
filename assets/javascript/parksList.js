@@ -1,8 +1,7 @@
 $(document).ready(function () {
 
-    let aParks = [];
-    let oPark;
     let aCoordinates = [];
+    let aParks = [];
 
     // Initialize Firebase
     var config = {
@@ -26,13 +25,47 @@ $(document).ready(function () {
     }
 
     function savePark() {
-        firebase.database().ref('/Park').set(oPark);
+        firebase.database().ref('/Park Code').set(parkCode);
     }
 
-    function fetchNPS(topic, string) {
+    function saveLocal() {
+        if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("parkCode", parkCode);
+        } else {
+            // Sorry! No Web Storage support..
+        }
+    }
+    $(document).on('click', '.park-div', function () {
+        let parkCode = '?parkCode=' + $(this).attr('id');
+        //savePark();
+        saveLocal(parkCode);
+        document.location.href = 'parkDetails.html';
+    });
 
+    function renderList() {
+        console.log("render");
+        $.each(aParks, function (index, value) {
+            if (value.latLong) {
+                aCoordinates.push(getCoordinate(value.latLong));
+                $('.row').append(`
+                <div class="park-div" id="${value.parkCode}">
+                    <div class="col">
+                    <h2>${value.fullName}</h2>
+                    <p>${value.description}</p>
+                    </div>
+                </div>
+            `);
+            }
+        });
+        $.each(aCoordinates, function (index, value) {
+
+        });
+    }
+
+    function fetchNPS(string) {
+        console.log(string);
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
-        let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + topic + '' + string;
+        let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + string;
 
         var myHeaders = new Headers();
         myHeaders.append('X-Api-Key', key);
@@ -46,52 +79,25 @@ $(document).ready(function () {
         fetch(url, myInit).then(function (response) {
             return response.json();
         }).then(function (json) {
-            oPark = json.data;
-            savePark();
-            document.location.href = 'parkDetails.html';
+            aParks = json.data;
+            renderList();
         });
     }
 
 
-    $('#searchParksBtn').click(function () {
-        let location = "?stateCode=" + $('#stateInput').val();
-        console.log($('#stateInput').val());
-        //fetchNPS('parks', location);
-    });
-
-    $(document).on('click', '.park', function () {
-        let parkId = '?parkCode=' + $(this).attr('id');
-
-        fetchNPS('parks', parkId);
-    });
-
-    (function renderParks() {
-        firebase.database().ref('/Parks').on('value', function (data) {
-            if (data.exists()) {
-                aParks = data.val();
-                console.log(aParks);
-            }
-            $.each(aParks, function (index, value) {
-                if (value.latLong) {
-                    aCoordinates.push(getCoordinate(value.latLong));
-                    console.log(value.parkCode);
-                    $('.row').append(`
-                    <div class="park" id="${value.parkCode}">
-                    <div class="col">
-                    <h2>${value.fullName}</h2>
-                    <p>${value.description}</p>
-                    </div>
-                    </div>
-
-                `);
-                }
-            });
-
-        });
-
-        $.each(aCoordinates, function (index, value) {
-
-        });
+    (function startPage() {
+        // firebase.database().ref('/States Code').on('value', function (data) {
+        //     if (data.exists()) {
+        //         statesCode = data.val();
+        //         fetchNPS(statesCode);
+        //     }
+        // });
+        if (typeof (Storage) !== "undefined") {
+            let statesCode = localStorage.getItem("statesCode");
+            fetchNPS(statesCode);
+        } else {
+            // Sorry! No Web Storage support..
+        }
     })();
 
     function initMap(latitude, longitude) {
