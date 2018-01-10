@@ -25,10 +25,17 @@ $(document).ready(function () {
     }
 
     $('select').change(function () {
-        let statesCode = "parks?statesCode=" + $('select option:selected').val();
+        let statesCode = "parks?stateCode=" + $('select option:selected').val();
         //saveParks(statesCode);
         saveLocal(statesCode);
-        document.location.href = 'parksList.html';
+        //document.location.href = 'parksList.html';
+
+        fetch('./parksList.html').then(response => {
+            return response.text();
+        }).then(html => {
+            $('#testing').html(html);
+        });
+
     });
 
 

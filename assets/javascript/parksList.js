@@ -43,7 +43,6 @@ $(document).ready(function () {
     });
 
     function renderList() {
-        console.log("render");
         $.each(aParks, function (index, value) {
             if (value.latLong) {
                 aCoordinates.push(getCoordinate(value.latLong));
@@ -63,10 +62,8 @@ $(document).ready(function () {
     }
 
     function fetchNPS(string) {
-        console.log(string);
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
         let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + string;
-
         var myHeaders = new Headers();
         myHeaders.append('X-Api-Key', key);
         var myInit = {
