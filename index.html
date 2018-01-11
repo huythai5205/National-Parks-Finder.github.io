@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>National Parks Finder</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./assets/css/index.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-primary">
+        <form>
+            Search by state:
+            <select class="state">
+                <option value="AL">AL</option>
+                <option value="AK">AK</option>
+                <option value="AZ">AZ</option>
+                <option value="AR">AR</option>
+                <option value="CA">CA</option>
+                <option value="CO">CO</option>
+                <option value="CT">CT</option>
+                <option value="DE">DE</option>
+                <option value="DC">DC</option>
+                <option value="FL">FL</option>
+                <option value="GA">GA</option>
+                <option value="HI">HI</option>
+                <option value="ID">ID</option>
+                <option value="IL">IL</option>
+                <option value="IN">IN</option>
+                <option value="IA">IA</option>
+                <option value="KS">KS</option>
+                <option value="KY">KY</option>
+                <option value="LA">LA</option>
+                <option value="ME">ME</option>
+                <option value="MD">MD</option>
+                <option value="MA">MA</option>
+                <option value="MI">MI</option>
+                <option value="MN">MN</option>
+                <option value="MS">MS</option>
+                <option value="MO">MO</option>
+                <option value="MT">MT</option>
+                <option value="NE">NE</option>
+                <option value="NV">NV</option>
+                <option value="NH">NH</option>
+                <option value="NJ">NJ</option>
+                <option value="NM">NM</option>
+                <option value="NY">NY</option>
+                <option value="NC">NC</option>
+                <option value="ND">ND</option>
+                <option value="OH">OH</option>
+                <option value="OK">OK</option>
+                <option value="OR">OR</option>
+                <option value="PA">PA</option>
+                <option value="RI">RI</option>
+                <option value="SC">SC</option>
+                <option value="SD">SD</option>
+                <option value="TN">TN</option>
+                <option value="TX">TX</option>
+                <option value="UT">UT</option>
+                <option value="VT">VT</option>
+                <option value="VA">VA</option>
+                <option value="WA">WA</option>
+                <option value="WV">WV</option>
+                <option value="WI">WI</option>
+                <option value="WY">WY</option>
+            </select>
+            <button id="getCurrentLocationBtn" type="button">Current Location</button>
+        </form>
+    </nav>
+
+    <div class=“jumbotron” id="container">
+        <div background>
+            <img class="mySlides " src="./assets/images/mountain1.jpg">
+        </div>
+
+        <div id="map" style="height: 400px; width:400px;"> </div>
+
+        <!-- <div id="firstPark">
+            <h3>Rocky Mountain National Park</h3>
+            <img class="featured1" src="./assets/images/rockies1.jpg">
+            <img class="featured1" src="./assets/images/rockies2.jpg">
+            <img class="featured1" src="./assets/images/rockies3.jpg">
+            <img class="featured1" src="./assets/images/rockies4.jpg">
+            <img class="featured1" src="./assets/images/rockies5.jpg">
+        </div>
+
+        <div id="secondPark">
+            <h3 class="secPark">Dry Tortugas National Park</h3>
+            <img class="featured2" src="./assets/images/tortugas.jpg">
+            <img class="featured2" src="./assets/images/tortugas2.jpg">
+            <img class="featured2" src="./assets/images/tortugas3.jpg">
+            <img class="featured2" src="./assets/images/tortugas4.jpg">
+            <img class="featured2" src="./assets/images/tortugas5.jpg">
+        </div>
+
+        <div id="thirdPark">
+            <h3 class="thrdPark">Arenal Volcano National Park</h3>
+            <img class="featured3" src="./assets/images/arenal1.jpg">
+            <img class="featured3" src="./assets/images/arenal2.jpg">
+            <img class="featured3" src="./assets/images/arenal3.jpg">
+            <img class="featured3" src="./assets/images/arenal4.jpg">
+            <img class="featured3" src="./assets/images/arenal5.jpg">
+        </div> -->
+
+        <header>
+            National Park Finder
+        </header>
+
+        <div class="features">
+            <h3>Featured Parks</h3>
+        </div>
+
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script type="text/javascript" src="./assets/javascript/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANV6qXylUZkQOymFM-DSSpJZU3CchV2dM">
+    </script>
+</body>
