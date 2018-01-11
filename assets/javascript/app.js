@@ -12,6 +12,8 @@ $(document).ready(function () {
 
     firebase.initializeApp(config);
 
+    let currentLoction = [];
+
     function initMap(latitude, longitude) {
         var uluru = {
             lat: parseInt(latitude),
@@ -177,6 +179,36 @@ $(document).ready(function () {
         return string[0];
     }
 
+    //takes in an array of object
+    function getClosestParks(oParks) {
+        let aDistance = [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE];
+        let aParks = [];
+        let radlat1 = Math.PI * currentLoction[0] / 180;
+        let low
+
+        $.each(oPark, function (index, value) {
+            let coordinate = getCoordinate(value.latLong);
+            let radlat2 = Math.PI * coordinate[0] / 180;
+            let theta = currentLoction[1] - coordinate[1];
+            let radtheta = Math.PI * theta / 180;
+            let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            dist = Math.acos(dist);
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
+
+            if (dist < aDistance[3]) {
+                aDistance[3] = dist;
+                aParks[3] = value;
+                aDistance.sort(function (a, b) {
+                    return a - b
+                });
+            }
+        });
+
+
+        renderList();
+    }
+
     $('#getCurrentLocationBtn').click(function () {
         var geocoder = new google.maps.Geocoder;
         // Try HTML5 geolocation.
@@ -193,7 +225,7 @@ $(document).ready(function () {
                     if (status === 'OK') {
                         if (results[0]) {
                             let statesCode = "parks?stateCode=" + getStateCode(results[0].formatted_address);
-                            fetchPage('./parksList.html', statesCode, renderList);
+                            fetchPage('./parksList.html', statesCode, getClosestParks);
                         } else {
                             console.log('No state found');
                         }
