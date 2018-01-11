@@ -12,7 +12,8 @@ $(document).ready(function () {
 
     firebase.initializeApp(config);
 
-    let currentLoction = [];
+    //[lat,long]
+    let currentLocation = [];
 
     function initMap(latitude, longitude) {
         var uluru = {
@@ -81,7 +82,7 @@ $(document).ready(function () {
         let latitude = coordinate[0].split(":");
         let longitude = coordinate[1].split(":");
 
-        return [parseInt(latitude[1]), parseInt(longitude[1])];
+        return [parseFloat(latitude[1]), parseFloat(longitude[1])];
     }
 
     function renderList(data) {
@@ -89,7 +90,8 @@ $(document).ready(function () {
         $.each(data, function (index, value) {
             if (value.latLong) {
                 let coordinates = getCoordinate(value.latLong);
-                aCoordinates.push([value.name, coordinates[0], coordinates[1]]);
+                let markerDisplay = `<h3>${value.name}</h3><a href="http://maps.google.com/maps?saddr=${currentLocation[0]},${currentLocation[1]}&daddr=${coordinates[0]},${coordinates[1]}" target="_blank">direction</a>`
+                aCoordinates.push([markerDisplay, coordinates[0], coordinates[1]]);
                 $('.row').append(`
                 <div class="park-div" id="${value.parkCode}">
                     <div class="col">
@@ -135,6 +137,19 @@ $(document).ready(function () {
 
     $('select').change(function () {
         let statesCode = "parks?stateCode=" + $('select option:selected').val();
+        let geocoder = new google.maps.Geocoder;
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                let string = JSON.stringify(pos);
+                currentLocation = getCoordinate(string);
+            });
+        }
+
         fetchPage('./parksList.html', statesCode, renderList);
     });
 
@@ -183,14 +198,14 @@ $(document).ready(function () {
             [Number.MAX_VALUE, {}],
             [Number.MAX_VALUE, {}]
         ];
-        let radlat1 = Math.PI * currentLoction[0] / 180;
+        let radlat1 = Math.PI * currentLocation[0] / 180;
         let coordinate;
         $.each(oParks, function (index, value) {
             if (value.latLong) {
                 coordinate = getCoordinate(value.latLong);
             }
             let radlat2 = Math.PI * coordinate[0] / 180;
-            let theta = currentLoction[1] - coordinate[1];
+            let theta = currentLocation[1] - coordinate[1];
             let radtheta = Math.PI * theta / 180;
             let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
             dist = Math.acos(dist);
@@ -228,7 +243,7 @@ $(document).ready(function () {
                     lng: position.coords.longitude
                 };
                 let string = JSON.stringify(pos);
-                currentLoction = getCoordinate(string);
+                currentLocation = getCoordinate(string);
                 geocoder.geocode({
                     'location': pos
                 }, function (results, status) {
