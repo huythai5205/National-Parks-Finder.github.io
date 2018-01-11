@@ -1,43 +1,59 @@
-//this code should be on top of each file and run on global scope
-
-var query = firebase.database().ref("users");
-
-query.once("value").then(function(snapshot) {
-  //check to see if there is an user object on local storage and
-  //if there is
-  //query the databsase and see if that user object matches up with a user in our db
-  //if it does we will fire of user logged in functions and ler app run accordingly
-  //else fire off userNotLoggedIn and show stuff acordingly
-
-  var retrievedObject = JSON.parse(localStorage.getItem("user"));
-
-  console.log("retrievedObject: ", retrievedObject);
-
-  snapshot.forEach(function(childSnapshot) {
-    // childData will be the actual contents of the child
-    var childData = childSnapshot.val();
-    if (
-      childData.email == retrievedObject.email &&
-      childData.password == retrievedObject.password
-    ) {
-      console.log("user is still logged in successfully");
-      // Put the object into storage
-      localStorage.setItem("user", JSON.stringify(childData));
-      userLoggedIn();
-    }
-    console.log(childData);
-  });
-});
-
-function userLoggedIn() {
-  //do stuff that you want the page to do if user was logged in
-  console.log("yo we are still logged in");
-}
-
 jQuery(document).ready(function($) {
-  const database = firebase.database();
+  $("#logOut").hide();
+  var userLoginState = false;
 
+  const database = firebase.database();
   const ref = database.ref();
+
+  //insert the crazy auth checker code here thats at the bottom of fime on global
+  var query = firebase.database().ref("users");
+
+  query.once("value").then(function(snapshot) {
+    //check to see if there is an user object on local storage and
+    //if there is
+    //query the databse and see if that user object matches up with a user in our db
+    //if it does we will fire of user logged in functions and ler app run accordingly
+    //else fire off userNotLoggedIn and show stuff acordingly
+
+    var retrievedObject = JSON.parse(localStorage.getItem("user"));
+
+    console.log("retrievedObject: ", retrievedObject);
+
+    snapshot.forEach(function(childSnapshot) {
+      // childData will be the actual contents of the child
+      var childData = childSnapshot.val();
+      if (
+        childData.email == retrievedObject.email &&
+        childData.password == retrievedObject.password
+      ) {
+        console.log("user is still logged in successfully");
+        // Put the object into storage
+        localStorage.setItem("user", JSON.stringify(childData));
+
+        userLoginState = true;
+        userLoggedIn();
+      }
+      console.log(childData);
+    });
+  });
+
+  function userLoggedIn() {
+    //if user logged in
+    //hid both the singup/ login
+    //alter the display property set it to none
+    //show a signout button
+    //alter the display property set it to block
+    $("#login").hide();
+    $("#signUp").hide();
+    $("#logOut").show();
+
+    // if (userLoginState){
+    //   location.reload();
+    // }
+
+    //do stuff that you want the page to do if user was logged in
+    console.log("yo we are still logged in bro");
+  }
 
   const userRef = database.ref("users");
   //this is the start of the for modal logic
@@ -169,13 +185,21 @@ jQuery(document).ready(function($) {
           console.log("signin successfull");
           // Put the object into storage
           localStorage.setItem("user", JSON.stringify(childData));
-          $form_modal.removeClass("is-visible");
+          userLoginState = true;
+          if (userLoginState == true) {
+            userLoggedIn();
+            location.reload();
+          }
         } else {
-          console.log(`your passwords do not match`);
+          console.log(`hey fool your pwords suck and dont match`);
         }
         console.log(childData);
       });
     });
+    if (userLoginState == true) {
+      userLoggedIn();
+      location.reload();
+    }
   });
 
   //this is the event listner for the user signup form
@@ -220,12 +244,25 @@ jQuery(document).ready(function($) {
         .database()
         .ref("users/" + userName)
         .set(userObj);
-
-      // hide modal
-      $form_modal.removeClass("is-visible");
+      userLoginState = true;
+      if (userLoginState == true) {
+        userLoggedIn();
+        location.reload();
+      }
+      //propbably how you would store favorite parks
+      // firebase.database().ref('users/' + userName + "/favoriteParks" + parkObj).set(userObj);
     } else {
-      console.log(`Your passwords do not match`);
+      console.log(`hey fool your pwords suck and dont match`);
     }
+    if (userLoginState == true) {
+      userLoggedIn();
+      location.reload();
+    }
+  });
+
+  $("#logOut").on("click", function() {
+    localStorage.setItem("user", JSON.stringify({}));
+    location.reload();
   });
 
   //IE9 placeholder fallback
