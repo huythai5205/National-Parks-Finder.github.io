@@ -2,17 +2,7 @@ $(document).ready(function () {
 
     let oPark;
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBbhqfr6ojolDSamP-4uuWc-CbdOVqee14",
-        authDomain: "national-parks-finder.firebaseapp.com",
-        databaseURL: "https://national-parks-finder.firebaseio.com",
-        projectId: "national-parks-finder",
-        storageBucket: "",
-        messagingSenderId: "928628829701"
-    };
 
-    firebase.initializeApp(config);
 
     function initMap(latitude, longitude) {
         var uluru = {

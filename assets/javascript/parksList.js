@@ -3,17 +3,7 @@ $(document).ready(function () {
     let aCoordinates = [];
     let aParks = [];
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBbhqfr6ojolDSamP-4uuWc-CbdOVqee14",
-        authDomain: "national-parks-finder.firebaseapp.com",
-        databaseURL: "https://national-parks-finder.firebaseio.com",
-        projectId: "national-parks-finder",
-        storageBucket: "",
-        messagingSenderId: "928628829701"
-    };
 
-    firebase.initializeApp(config);
 
     function getCoordinate(coordinate) {
         //"lat:38.03977546, long:-103.4266499"
