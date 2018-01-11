@@ -48,7 +48,7 @@ $(document).ready(function () {
         }).then(function (json) {
             oPark = json.data;
             savePark();
-            document.location.href = 'parkDetails.html';
+            //document.location.href = 'parkDetails.html';
         });
     }
 
@@ -65,7 +65,7 @@ $(document).ready(function () {
         fetchNPS('parks', parkId);
     });
 
-    (function renderParks() {
+    (function renderPark() {
         firebase.database().ref('/Park').on('value', function (data) {
             if (data.exists()) {
                 oPark = data.val();
@@ -80,6 +80,10 @@ $(document).ready(function () {
                     </div>
 
                 `);
+
+                let coord = getCoordinate(oPark[0].latLong);
+                console.log(coord[0], coord[1]);
+                initMap(coord[0], coord[1]);
             }
         });
     })();
@@ -87,21 +91,19 @@ $(document).ready(function () {
 
 
 
-    // function initMap() {
-    //     console.log("map working");
-    //     var uluru = {
-    //         lat: -25.363,
-    //         lng: 131.044
-    //     };
-    //     var map = new google.maps.Map(document.getElementById('map'), {
-    //         zoom: 4,
-    //         center: uluru
-    //     });
-    //     var marker = new google.maps.Marker({
-    //         position: uluru,
-    //         map: map
-    //     });
+    function initMap(latitude, longitude) {
+        var uluru = {
+            lat: parseInt(latitude),
+            lng: parseInt(longitude)
+        };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 6,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
 
-    // }
-    // initMap();
+    }
 });
