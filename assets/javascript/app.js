@@ -41,13 +41,11 @@ $(document).ready(function () {
         `);
 
         let coordinates = getCoordinate(data[0].latLong);
-        console.log(coordinates[0], coordinates[1]);
         initMap(coordinates[0], coordinates[1]);
     }
 
     $(document).on('click', '.park-div', function () {
         let parkCode = 'parks?parkCode=' + $(this).attr('id');
-        console.log(parkCode);
         fetchPage('./parkDetails.html', parkCode, renderPark);
     });
 
@@ -83,7 +81,7 @@ $(document).ready(function () {
         let latitude = coordinate[0].split(":");
         let longitude = coordinate[1].split(":");
 
-        return [latitude[1], longitude[1]];
+        return [parseInt(latitude[1]), parseInt(longitude[1])];
     }
 
     function renderList(data) {
@@ -109,7 +107,6 @@ $(document).ready(function () {
     function fetchNPS(string, functionToExecute) {
         let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
         let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + string;
-        console.log(url);
         var myHeaders = new Headers();
         myHeaders.append('X-Api-Key', key);
         var myInit = {
@@ -142,7 +139,6 @@ $(document).ready(function () {
     });
 
     function getLatLngCenter(latLngInDegr) {
-        console.log(latLngInDegr);
         var LATIDX = 1;
         var LNGIDX = 2;
         var sumX = 0;
@@ -181,13 +177,18 @@ $(document).ready(function () {
 
     //takes in an array of object
     function getClosestParks(oParks) {
-        let aDistance = [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE];
-        let aParks = [];
+        let aDistance = [
+            [Number.MAX_VALUE, {}],
+            [Number.MAX_VALUE, {}],
+            [Number.MAX_VALUE, {}],
+            [Number.MAX_VALUE, {}]
+        ];
         let radlat1 = Math.PI * currentLoction[0] / 180;
-        let low
-
-        $.each(oPark, function (index, value) {
-            let coordinate = getCoordinate(value.latLong);
+        let coordinate;
+        $.each(oParks, function (index, value) {
+            if (value.latLong) {
+                coordinate = getCoordinate(value.latLong);
+            }
             let radlat2 = Math.PI * coordinate[0] / 180;
             let theta = currentLoction[1] - coordinate[1];
             let radtheta = Math.PI * theta / 180;
@@ -195,18 +196,26 @@ $(document).ready(function () {
             dist = Math.acos(dist);
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
-
-            if (dist < aDistance[3]) {
-                aDistance[3] = dist;
-                aParks[3] = value;
+            if (dist < aDistance[3][0]) {
+                aDistance[3] = [dist, value];
                 aDistance.sort(function (a, b) {
-                    return a - b
+                    return a[0] - b[0];
                 });
             }
         });
 
+        let aParks = [aDistance[0][1], aDistance[1][1], aDistance[2][1], aDistance[3][1]];
+        renderList(aParks);
+    }
 
-        renderList();
+    function getBorderStates(currentState) {
+        //%2C%20
+        let statesCode = neighbors[currentState];
+        let statesString = 'parks?stateCode=' + statesCode[0];
+        for (let i = 1; i < statesCode.length; i++) {
+            statesString += '%2C%20' + statesCode[i];
+        }
+        fetchPage('./parksList.html', statesString, getClosestParks);
     }
 
     $('#getCurrentLocationBtn').click(function () {
@@ -218,14 +227,16 @@ $(document).ready(function () {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
+                let string = JSON.stringify(pos);
+                currentLoction = getCoordinate(string);
                 geocoder.geocode({
                     'location': pos
                 }, function (results, status) {
                     if (status === 'OK') {
                         if (results[0]) {
-                            let statesCode = "parks?stateCode=" + getStateCode(results[0].formatted_address);
-                            fetchPage('./parksList.html', statesCode, getClosestParks);
+                            let stateCode = getStateCode(results[0].formatted_address);
+                            getBorderStates(stateCode);
+                            //fetchPage('./parksList.html', stateCode, getClosestParks);
                         } else {
                             console.log('No state found');
                         }
