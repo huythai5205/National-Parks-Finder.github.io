@@ -39,47 +39,47 @@ $(document).ready(function () {
 
     }
 
-    function fetchPark(string) {
-        let key = 'ZKLb9xO0SnI4KkfXFdoM9fmLuFkJqtfVtXKPpxM0';
-        let url = 'https://cors-anywhere.herokuapp.com/https://developer.nps.gov/api/v1/' + string;
-        var myHeaders = new Headers();
-        myHeaders.append('X-Api-Key', key);
-        var myInit = {
-            method: 'GET',
-            headers: myHeaders,
-            mode: 'cors',
-            cache: 'default'
-        };
+    function renderParkAlerts(data) {
+        if (data[0]) {
+            let string = '';
+            $.each(data, function (index, value) {
+                string = `<h5>${value.title}</h5>
+                <p>${value.description}</p>`
+            });
+            $('#alerts-div').html(`
+                <h3>Park's alert</h3>
+                ${string}
+            `);
+        }
+    }
 
-        fetch(url, myInit).then(function (response) {
-            // return response.json();
-        }).then(function (json) {
-            return json;
-        });
+    function renderParkEvents(data) {
+        if (data[0]) {
+            let string = '';
+            $('#alerts-div').html(`
+                <h3>Park's alert</h3>
+                $.each(data, function (index, value) {
+                    <h5>${value.title}</h5>
+                    <p>Start date: ${value.startDate}</p>
+                    <p>End date: ${value.endDate}</p>
+                    <p><a href="${value.url}" target="_blank">Event's website</a></p>
+                    <p>${value.abstract}</p>
+                });
+            `);
+        }
     }
 
     function renderPark(data) {
-        let alerts = fetchPark(`alerts?parkCode=${data[0].parkCode}`);
-        console.log(alerts);
+        fetchNPS('alerts?parkCode=' + data[0].parkCode, renderParkAlerts);
+        fetchNPS('events?parkCode=' + data[0].parkCode, renderParkEvents);
         $('.row').append(`
-        <div class="park-div">
-            <h2>${data[0].fullName}</h2>
-            <p>${data[0].description}</p>
-            <div class="col-xs-6">
-                <a href="${data[0].url}" target="_blank">Park's website</a>
+        <div class="park">
+            <div class="col">
+                <h2>${data[0].fullName}</h2>
+                <p>${data[0].description}</p>
             </div>
-            <div class="col-xs-6">
-                <h3>Today's weather</h3>
-                <p>${data[0].weatherInfo}</p>
-            </div>
-            <div class="col-xs-6">
-                <h3>Today's weather</h3>
-                <p>${data[0].weatherInfo}</p>
-            </div>
-            <div class="col-xs-6">
-                <h3>Today's weather</h3>
-                <p>${data[0].weatherInfo}</p>
-            </div>
+            <div class="col" id="alerts-div"></div>
+            <div class="col" id="events-div
         </div>
         `);
 
