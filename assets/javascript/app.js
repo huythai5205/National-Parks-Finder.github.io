@@ -44,7 +44,7 @@ $(document).ready(function () {
             let string = '';
             $.each(data, function (index, value) {
                 string = `<h5>${value.title}</h5>
-                <p>${value.description}</p>`
+                <p>${value.description}</p>`;
             });
             $('#alerts-div').html(`
                 <h3>Park's alert</h3>
@@ -56,15 +56,16 @@ $(document).ready(function () {
     function renderParkEvents(data) {
         if (data[0]) {
             let string = '';
+            $.each(data, function (index, value) {
+                string = `<h5>${value.title}</h5>
+                <p>Start date: ${value.startDate}</p>
+                <p>End date: ${value.endDate}</p>
+                <p><a href="${value.url}" target="_blank">Event's website</a></p>
+                <p>${value.abstract}</p>`;
+            });
             $('#alerts-div').html(`
                 <h3>Park's alert</h3>
-                $.each(data, function (index, value) {
-                    <h5>${value.title}</h5>
-                    <p>Start date: ${value.startDate}</p>
-                    <p>End date: ${value.endDate}</p>
-                    <p><a href="${value.url}" target="_blank">Event's website</a></p>
-                    <p>${value.abstract}</p>
-                });
+                ${string}
             `);
         }
     }
