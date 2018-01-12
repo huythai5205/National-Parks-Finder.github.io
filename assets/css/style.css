@@ -1,0 +1,50 @@
+.mySlides {
+    height: 600px;
+    width: 100%;
+}
+
+h1 {
+    position: relative;
+    text-align: center;
+}
+
+header {
+    text-align: center;
+    font-size: 85px;
+}
+
+body {
+    background-color: black;
+    padding: 30px;
+}
+
+header {
+    color: white;
+}
+
+h3 {
+    color: white;
+}
+
+a {
+    margin: auto;
+}
+
+.features {
+    text-align: center;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+#map {
+    margin: auto;
+}
+
+.row {
+    text-align: center;
+}
+
+.parks-list-div {
+    border-style: groove;
+    margin: 10px;
+}
