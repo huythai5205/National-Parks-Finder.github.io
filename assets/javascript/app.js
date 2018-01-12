@@ -47,7 +47,7 @@ $(document).ready(function () {
                 <p>${value.description}</p>`;
             });
             $('#alerts-div').html(`
-                <h3>Park's alert</h3>
+                <h3>Park's alerts</h3>
                 ${string}
             `);
         }
@@ -64,7 +64,7 @@ $(document).ready(function () {
                 <p>${value.abstract}</p>`;
             });
             $('#alerts-div').html(`
-                <h3>Park's alert</h3>
+                <h3>Park's Events</h3>
                 ${string}
             `);
         }
@@ -80,7 +80,7 @@ $(document).ready(function () {
                 <p>${data[0].description}</p>
             </div>
             <div class="col" id="alerts-div"></div>
-            <div class="col" id="events-div
+            <div class="col" id="events-div"></div>
         </div>
         `);
 
