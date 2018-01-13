@@ -1,16 +1,5 @@
 $(document).ready(function () {
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBbhqfr6ojolDSamP-4uuWc-CbdOVqee14",
-        authDomain: "national-parks-finder.firebaseapp.com",
-        databaseURL: "https://national-parks-finder.firebaseio.com",
-        projectId: "national-parks-finder",
-        storageBucket: "",
-        messagingSenderId: "928628829701"
-    };
-
-    firebase.initializeApp(config);
 
     //[lat,long]
     let currentLocation = [];
